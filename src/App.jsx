@@ -362,49 +362,57 @@ const PricingSection = () => {
   return (
     <SectionShell>
       <div className="grid gap-6">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-          <h2 className="max-w-3xl text-4xl font-black leading-none text-white sm:text-6xl">
-            Your $30/Month Keeps Everything Running
-          </h2>
-          <span className="w-max rounded-full border border-white/20 bg-white px-4 py-2 text-sm font-black text-black">
-            $0 setup
-          </span>
+        <div className="flex flex-col gap-8 text-center md:text-left md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <h1 className="font-headline text-[32px] font-bold leading-[38px] tracking-[-0.02em] text-primary md:text-[48px] md:leading-[56px] md:tracking-[-0.02em]">
+              Your $30/Month Keeps Everything Running
+            </h1>
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <span className="w-max rounded-full border border-outline-subtle/10 bg-surface-mid px-6 py-3 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">
+              $0 setup
+            </span>
+          </div>
         </div>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map(([title, text, Icon], index) => (
             <FadeIn key={title} delay={index * 0.04}>
-              <div className="h-full border border-white/10 bg-white/[0.03] p-4">
-                <Icon className="mb-4 h-6 w-6 text-zinc-400" />
-                <h3 className="text-lg font-black text-white">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-300">{text}</p>
+              <div className="group h-full rounded-lg border border-outline-subtle/10 bg-surface-low p-8 transition-colors duration-300 hover:bg-surface-high">
+                <Icon className="mb-6 h-6 w-6 text-primary" />
+                <h3 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary mb-2">{title}</h3>
+                <p className="font-body text-[16px] leading-[24px] text-on-surface-dim">{text}</p>
               </div>
             </FadeIn>
           ))}
         </div>
         <FadeIn delay={0.16}>
-          <div className="overflow-x-auto border border-white/10">
-            <div className="min-w-[680px]">
-              <div className="grid grid-cols-4 bg-white/[0.06] text-sm font-black text-white">
-                <span className="p-3"> </span>
-                <span className="bg-white p-3 text-black">SiteKeep</span>
-                <span className="p-3">Wix/Squarespace</span>
-                <span className="p-3">Agency</span>
-              </div>
-              {rows.map((row) => (
-                <div key={row[0]} className="grid grid-cols-4 border-t border-white/10 text-sm text-zinc-300">
-                  <span className="p-3 font-semibold text-white">{row[0]}</span>
-                  <span className="bg-white/[0.08] p-3 font-black text-white">{row[1]}</span>
-                  <span className="p-3">{row[2]}</span>
-                  <span className="p-3">{row[3]}</span>
-                </div>
-              ))}
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-left">
+              <thead>
+                <tr className="border-b border-outline-subtle/20">
+                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-on-surface-dim font-medium"> </th>
+                  <th className="rounded-t-lg bg-primary px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-on-primary">SiteKeep</th>
+                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">Wix/Squarespace</th>
+                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">Agency</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-outline-subtle/10">
+                {rows.map((row, rowIndex) => (
+                  <tr key={row[0]}>
+                    <td className="px-4 py-8 font-body text-[16px] leading-[24px] text-on-surface-dim">{row[0]}</td>
+                    <td className={`bg-primary/95 px-4 py-8 font-bold text-on-primary ${rowIndex === rows.length - 1 ? 'rounded-b-lg' : ''}`}>{row[1]}</td>
+                    <td className="px-4 py-8 text-primary">{row[2]}</td>
+                    <td className="px-4 py-8 text-primary">{row[3]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </FadeIn>
         <FadeIn delay={0.22}>
-          <div className="grid gap-5 border-y border-white/10 py-5 lg:grid-cols-[0.6fr_1.4fr]">
-            <h3 className="text-2xl font-black text-white">"This Sounds Too Good. What's the Catch?"</h3>
-            <p className="leading-7 text-zinc-300">
+          <div className="grid gap-5 border-y border-outline-subtle/10 py-5 lg:grid-cols-[0.6fr_1.4fr]">
+            <h3 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">"This Sounds Too Good. What's the Catch?"</h3>
+            <p className="font-body text-[16px] leading-[24px] text-on-surface-dim">
               Fair question. Here's the truth: we make our money over time, not upfront. We break even around the
               two-year mark, then it becomes worth it for us. That model only works if you're happy enough to stay — so
               we have every reason to do great work and keep you satisfied. No contracts. No pressure. If you ever want
@@ -413,15 +421,15 @@ const PricingSection = () => {
           </div>
         </FadeIn>
         <FadeIn delay={0.28}>
-          <div className="grid gap-4 text-sm text-zinc-300 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {[
               ['No surprise invoices', 'Small edits, hosting care, and support are folded into one predictable plan.'],
               ['No platform lock-in', 'If you leave, the files and domain go with you. That should be normal.'],
               ['No template ceiling', 'The site can grow as the business changes because the code is not boxed in.'],
             ].map(([title, text]) => (
-              <div key={title} className="border-l border-white/15 pl-4">
-                <h4 className="font-black text-white">{title}</h4>
-                <p className="mt-2 leading-6">{text}</p>
+              <div key={title} className="border-l border-outline-subtle/15 pl-4">
+                <h4 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">{title}</h4>
+                <p className="mt-2 font-body text-[16px] leading-[24px] text-on-surface-dim">{text}</p>
               </div>
             ))}
           </div>
@@ -439,30 +447,31 @@ const WorkSection = () => {
   return (
     <SectionShell>
       <div className="grid gap-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className="text-4xl font-black leading-none text-white sm:text-6xl">Built for Businesses Like Yours</h2>
-            <p className="mt-4 max-w-2xl text-zinc-300">
+        <div className="text-center">
+          <div className="mx-auto max-w-3xl">
+            <h1 className="font-headline text-[32px] font-bold leading-[38px] tracking-[-0.02em] text-primary md:text-[48px] md:leading-[56px] md:tracking-[-0.02em] mb-4">
+              Built for Businesses Like Yours
+            </h1>
+            <p className="font-body text-[18px] leading-[28px] text-on-surface-dim">
               Every site is hand-coded from scratch. No templates, no page builders.
             </p>
           </div>
-          {visibleCount < projects.length && (
-            <button
-              onClick={() => setVisibleCount((count) => Math.min(count + 3, projects.length))}
-              className="inline-flex w-max items-center gap-2 rounded-full border border-white/20 px-4 py-2 font-semibold text-white transition hover:border-white/60 hover:bg-white/5"
-            >
-              Show More <ChevronDown className="h-4 w-4" />
-            </button>
-          )}
         </div>
-        <div className="grid gap-3 border-y border-white/10 py-4 text-sm text-zinc-300 md:grid-cols-3">
-          {['Small business sites', 'Service pages and lead forms', 'Launch plus monthly care'].map((item) => (
-            <p key={item} className="font-semibold">
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+          {['Small business sites', 'Service pages and lead forms', 'Launch plus monthly care'].map((item, index) => (
+            <p
+              key={item}
+              className={`text-xs font-medium transition-colors ${
+                index === 0
+                  ? 'text-primary relative after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:bg-primary'
+                  : 'text-on-surface-dim/60 hover:text-primary'
+              }`}
+            >
               {item}
             </p>
           ))}
         </div>
-        <motion.div layout className="grid gap-4 md:grid-cols-3">
+        <motion.div layout className="grid gap-6 md:grid-cols-3">
           <AnimatePresence initial={false}>
             {visibleProjects.map((project, index) => (
               <motion.article
@@ -472,33 +481,43 @@ const WorkSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 18 }}
                 transition={{ duration: 0.35, delay: index >= 3 ? (index - 3) * 0.05 : 0 }}
-                className="border border-white/10 bg-white/[0.03] p-3"
+                className="group flex flex-col overflow-hidden rounded-xl border border-outline-subtle/10 bg-surface-low transition-colors duration-300 hover:bg-surface-high"
               >
                 <VideoPlaceholder src={project.videoSrc} />
-                <div className="mt-4">
-                  <h3 className="text-xl font-black text-white">{project.title}</h3>
-                  <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-300">{project.description}</p>
-                </div>
-                <div className="mt-4 flex items-center justify-between gap-2">
-                  <div className="flex gap-2">
-                    <LinkButton href={project.githubUrl} variant="outline" icon={Github}>
-                      <span className="sr-only">GitHub</span>
-                    </LinkButton>
-                    <LinkButton href={project.liveUrl} variant="outline" icon={Globe2}>
-                      <span className="sr-only">Live Site</span>
-                    </LinkButton>
+                <div className="flex flex-col flex-grow p-8">
+                  <h3 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary mb-3">{project.title}</h3>
+                  <p className="mb-8 min-h-12 flex-grow font-body text-[16px] leading-[24px] text-on-surface-dim">{project.description}</p>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex gap-2">
+                      <LinkButton href={project.githubUrl} variant="outline" icon={Github}>
+                        <span className="sr-only">GitHub</span>
+                      </LinkButton>
+                      <LinkButton href={project.liveUrl} variant="outline" icon={Globe2}>
+                        <span className="sr-only">Live Site</span>
+                      </LinkButton>
+                    </div>
+                    <button
+                      onClick={() => setSelectedProject(project)}
+                      className="rounded-full bg-primary px-6 py-2 font-label text-xs font-medium text-on-primary transition-colors hover:bg-on-surface active:scale-95"
+                    >
+                      Details
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="rounded-full bg-white px-4 py-2 text-sm font-black text-black transition hover:bg-zinc-200"
-                  >
-                    Details
-                  </button>
                 </div>
               </motion.article>
             ))}
           </AnimatePresence>
         </motion.div>
+        {visibleCount < projects.length && (
+          <div className="flex items-center justify-end">
+            <button
+              onClick={() => setVisibleCount((count) => Math.min(count + 3, projects.length))}
+              className="flex items-center gap-2 font-label text-xs font-medium text-primary transition-all hover:underline"
+            >
+              Show More <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </SectionShell>
