@@ -776,8 +776,8 @@ export default function App() {
           style={{ backgroundColor: getTabColor(activeTab) }}
         >
           <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-4 py-5 sm:px-6 lg:px-10">
-            <button onClick={() => moveToTab('Home')} className="text-xl font-black tracking-normal text-white">
-              Site<span className="text-zinc-400">Keep</span>
+            <button onClick={() => moveToTab('Home')} className="font-logo text-2xl tracking-normal text-white">
+              SiteKeep
             </button>
             <span className="hidden text-sm font-semibold text-zinc-400 sm:inline-flex">
               Free build. $30/month care.
