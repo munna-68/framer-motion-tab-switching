@@ -2,19 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
+  Calendar,
   Check,
   ChevronDown,
+  Code2,
   Github,
   Globe2,
+  Headphones,
   Mail,
   Play,
   Search,
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
+  Tag,
   X,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import Lenis from 'lenis';
 
 const tabs = ['Home', 'How It Works', 'Pricing', 'Work', 'Contact'];
 
@@ -105,29 +110,190 @@ const customStyles = `
   ::-webkit-scrollbar-thumb:hover { background: #71717a; }
 `;
 
-const FadeIn = ({ children, delay = 0, y = 24, className = '' }) => (
-  <motion.div
-    initial={{ opacity: 0, y }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
+// Preloader Context for triggering entrance animations simultaneously with the columns split
+const PreloaderContext = React.createContext({ startReveal: false });
 
-const RevealLine = ({ children, delay = 0, className = '' }) => (
-  <span className="block overflow-hidden pb-2 -mb-2">
-    <motion.span
-      className={`block ${className}`}
-      initial={{ y: '100%' }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay }}
+// 1. Scramble & Glitch Text Component
+const ScrambleText = ({ text, startGlitchOut }) => {
+  const [display, setDisplay] = useState(text.replace(/./g, " ")); 
+  const chars = "!@#$%^&*()_+-=[]{}|;':,./<>?";
+
+  useEffect(() => {
+    let iteration = 0;
+    let interval = setInterval(() => {
+      setDisplay((current) =>
+        text
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) return text[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        clearInterval(interval);
+      }
+      iteration += 0.25; 
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <motion.div
+      className="font-glitch text-[#111] text-base sm:text-lg md:text-xl tracking-[0.5em] uppercase select-none relative z-20"
+      initial="visible"
+      animate={startGlitchOut ? "glitchOut" : "visible"}
+      variants={{
+        visible: { opacity: 1, scale: 1 },
+        glitchOut: {
+          opacity: [1, 1, 1, 0.5, 0],
+          x: [0, -15, 15, -10, 10, -15, 0],
+          y: [0, 8, -8, 8, -8, 8, 0],
+          textShadow: [
+            "0px 0px 0px rgba(0,0,0,1)",
+            "5px 0px 0px rgba(255,0,0,0.8), -5px 0px 0px rgba(0,255,255,0.8)",
+            "-5px 0px 0px rgba(255,0,0,0.8), 5px 0px 0px rgba(0,255,255,0.8)",
+            "0px 0px 0px rgba(0,0,0,1)",
+            "6px 3px 0px rgba(255,0,0,0.8), -6px -3px 0px rgba(0,255,255,0.8)",
+            "0px 0px 0px rgba(0,0,0,0)"
+          ],
+          filter: ["blur(0px)", "blur(0px)", "blur(3px)", "blur(0px)", "blur(5px)", "blur(12px)"],
+          transition: { duration: 0.6, ease: "linear" }
+        }
+      }}
+    >
+      {display}
+    </motion.div>
+  );
+};
+
+// 2. Main Preloader Component
+const Preloader = ({ onReveal, onComplete }) => {
+  const [startGlitchOut, setStartGlitchOut] = useState(false);
+  const [columnCount, setColumnCount] = useState(10);
+  
+  useEffect(() => {
+    const updateColumns = () => {
+      if (window.innerWidth < 640) {
+        setColumnCount(4); // 4 columns on mobile screen
+      } else {
+        setColumnCount(10); // 10 columns on desktop
+      }
+    };
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  const middle = (columnCount - 1) / 2;
+  const getDelay = (i) => 2.2 + (Math.abs(i - middle) * 0.06);
+
+  useEffect(() => {
+    const glitchTimer = setTimeout(() => setStartGlitchOut(true), 1500);
+    const revealTimer = setTimeout(() => onReveal(), 2900); // 2.9s: Trigger reveal exactly as columns slide open!
+    const completeTimer = setTimeout(() => onComplete(), 3800);
+
+    return () => {
+      clearTimeout(glitchTimer);
+      clearTimeout(revealTimer);
+      clearTimeout(completeTimer);
+    };
+  }, [onReveal, onComplete]);
+
+  return (
+    <motion.div className="fixed inset-0 z-50 flex pointer-events-none">
+      <div className="absolute inset-0 flex w-full h-full">
+        {Array.from({ length: columnCount }).map((_, i) => (
+          <div key={i} className="relative flex-1 h-full overflow-hidden">
+            <motion.div
+              className="absolute top-0 left-0 w-full h-[calc(50%+1px)] bg-[#f6f6f6]"
+              initial={{ y: "0%" }}
+              animate={{ y: "-100%" }}
+              transition={{ duration: 1.2, delay: getDelay(i), ease: [0.85, 0, 0.15, 1] }}
+            />
+            <motion.div
+              className="absolute bottom-0 left-0 w-full h-[calc(50%+1px)] bg-[#f6f6f6]"
+              initial={{ y: "0%" }}
+              animate={{ y: "100%" }}
+              transition={{ duration: 1.2, delay: getDelay(i), ease: [0.85, 0, 0.15, 1] }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <ScrambleText text="SiteKeep" startGlitchOut={startGlitchOut} />
+      </div>
+    </motion.div>
+  );
+};
+
+const FadeIn = ({ children, delay = 0, y = 24, className = '' }) => {
+  const { startReveal } = React.useContext(PreloaderContext);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  const shouldAnimate = startReveal && isInView;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y }}
+      animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: delay + 0.25 }}
+      className={className}
     >
       {children}
-    </motion.span>
-  </span>
-);
+    </motion.div>
+  );
+};
+
+const RevealLine = ({ children, delay = 0, className = '' }) => {
+  const { startReveal } = React.useContext(PreloaderContext);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  const shouldAnimate = startReveal && isInView;
+
+  return (
+    <span ref={ref} className="block overflow-hidden pb-2 -mb-2">
+      <motion.span
+        className={`block ${className}`}
+        initial={{ y: '100%', rotate: 2 }}
+        animate={shouldAnimate ? { y: 0, rotate: 0 } : { y: '100%', rotate: 2 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: delay + 0.25 }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+};
+
+const AnimatedLine = ({ children, text, delay = 0, className = '' }) => {
+  const { startReveal } = React.useContext(PreloaderContext);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+
+  const shouldAnimate = startReveal && isInView;
+
+  return (
+    <div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.div
+        initial={{ y: "100%", opacity: 0, rotate: 3 }}
+        animate={shouldAnimate ? { y: "0%", opacity: 1, rotate: 0 } : { y: "100%", opacity: 0, rotate: 3 }}
+        transition={{ 
+          duration: 1.2, 
+          delay: delay + 0.25, 
+          ease: [0.16, 1, 0.3, 1] 
+        }}
+        className="block origin-bottom-left"
+      >
+        {text || children}
+      </motion.div>
+    </div>
+  );
+};
 
 const SectionShell = ({ children, className = '' }) => (
   <section
@@ -191,6 +357,8 @@ const LinkButton = ({ href, children, variant = 'solid', icon: Icon }) => {
 
 const HomeSection = ({ onCta }) => (
   <SectionShell>
+    {/* Ambient Glow */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vh] bg-white opacity-[0.03] blur-[100px] rounded-full pointer-events-none" />
     <div className="relative grid items-center gap-6 lg:grid-cols-12 lg:gap-6">
       <div className="absolute inset-0 monolith-gradient pointer-events-none" />
       <div className="relative z-10 lg:col-span-7 flex flex-col justify-center space-y-12 mb-20 lg:mb-0">
@@ -351,12 +519,12 @@ const PricingSection = () => {
   ];
 
   const rows = [
-    ['Setup Cost', '$0', '$0', '$2,000–$10,000'],
-    ['Monthly Cost', '$30', '$16–$45', '$100–$500'],
-    ['Custom Built', 'Yes', 'No', 'Yes'],
-    ['Ongoing Support', 'Yes', 'No', 'Rarely'],
-    ['You Own the Domain', 'Yes', 'Yes', 'Sometimes'],
-    ['SEO Optimized', 'Yes', 'Basic', 'Yes'],
+    { label: 'Setup Cost', icon: Tag, values: ['$0', '$0', '$2,000–$10,000'] },
+    { label: 'Monthly Cost', icon: Calendar, values: ['$30', '$16–$45', '$100–$500'] },
+    { label: 'Custom Built', icon: Code2, values: ['Yes', 'No', 'Yes'] },
+    { label: 'Ongoing Support', icon: Headphones, values: ['Yes', 'No', 'Rarely'] },
+    { label: 'You Own the Domain', icon: Globe2, values: ['Yes', 'Yes', 'Sometimes'] },
+    { label: 'SEO Optimized', icon: Search, values: ['Yes', 'Basic', 'Yes'] },
   ];
 
   return (
@@ -375,44 +543,69 @@ const PricingSection = () => {
           </div>
         </div>
         <FadeIn delay={0.16}>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-left">
+          <div className="overflow-x-auto w-full border border-outline-subtle/10 bg-[#050505] rounded-2xl p-1 shadow-2xl">
+            <table className="w-full border-collapse text-left min-w-[700px]">
               <thead>
-                <tr className="border-b border-outline-subtle/20">
-                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-on-surface-dim font-medium"> </th>
-                  <th className="rounded-t-lg bg-primary px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-on-primary">SiteKeep</th>
-                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">Wix/Squarespace</th>
-                  <th className="px-4 py-6 font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">Agency</th>
+                <tr className="border-b border-outline-subtle/10">
+                  <th className="px-6 py-6 text-sm font-semibold tracking-wide text-zinc-500 w-[30%]"></th>
+                  <th className="relative px-6 py-6 text-center text-lg font-bold tracking-tight text-white w-[23.3%] font-headline">
+                    {/* Continuous floating border card overlay for SiteKeep column */}
+                    <div className="absolute inset-x-1 -top-1 bottom-0 border-t border-l border-r border-white/10 bg-white/[0.03] rounded-t-2xl z-0 pointer-events-none" />
+                    <span className="relative z-10">SiteKeep</span>
+                  </th>
+                  <th className="px-6 py-6 text-center text-lg font-semibold tracking-tight text-zinc-400 w-[23.3%] font-headline">Wix/Squarespace</th>
+                  <th className="px-6 py-6 text-center text-lg font-semibold tracking-tight text-zinc-400 w-[23.3%] font-headline">Agency</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-subtle/10">
-                {rows.map((row, rowIndex) => (
-                  <tr key={row[0]}>
-                    <td className="px-4 py-8 font-body text-[16px] leading-[24px] text-on-surface-dim">{row[0]}</td>
-                    <td className={`bg-primary/95 px-4 py-8 font-bold text-on-primary ${rowIndex === rows.length - 1 ? 'rounded-b-lg' : ''}`}>{row[1]}</td>
-                    <td className="px-4 py-8 text-primary">{row[2]}</td>
-                    <td className="px-4 py-8 text-primary">{row[3]}</td>
-                  </tr>
-                ))}
+              <tbody className="divide-y divide-outline-subtle/5">
+                {rows.map((row, rowIndex) => {
+                  const isLastRow = rowIndex === rows.length - 1;
+                  const Icon = row.icon;
+                  return (
+                    <tr key={row.label} className="border-b border-outline-subtle/5 last:border-b-0 group">
+                      {/* Feature Label Cell */}
+                      <td className="px-6 py-6 text-zinc-300 font-medium font-body text-base align-middle">
+                        <div className="flex items-center gap-3">
+                          <Icon className="h-5 w-5 text-zinc-500 flex-shrink-0 group-hover:text-primary transition-colors duration-300" />
+                          <span>{row.label}</span>
+                        </div>
+                      </td>
+                      {/* SiteKeep Cell (Highlighted Column) */}
+                      <td className="relative px-6 py-6 text-center text-white font-bold align-middle">
+                        {/* Highlight background card spanning this cell */}
+                        <div className={`absolute inset-x-1 -top-[1px] -bottom-[1px] bg-white/[0.03] border-l border-r border-white/10 z-0 pointer-events-none
+                          ${isLastRow ? 'rounded-b-2xl border-b border-white/10' : ''}
+                        `} />
+                        <span className="relative z-10 text-base">{row.values[0]}</span>
+                      </td>
+                      {/* Wix/Squarespace Cell */}
+                      <td className="px-6 py-6 text-center text-zinc-400 align-middle font-body text-base">{row.values[1]}</td>
+                      {/* Agency Cell */}
+                      <td className="px-6 py-6 text-center text-zinc-400 align-middle font-body text-base">{row.values[2]}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </FadeIn>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {features.map(([title, text, Icon], index) => (
             <FadeIn key={title} delay={index * 0.04}>
-              <div className="group h-full rounded-lg border border-outline-subtle/10 bg-surface-low p-8 transition-colors duration-300 hover:bg-surface-high">
-                <Icon className="mb-6 h-6 w-6 text-primary" />
-                <h3 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary mb-2">{title}</h3>
-                <p className="font-body text-[16px] leading-[24px] text-on-surface-dim">{text}</p>
+              <div className="group h-full rounded-xl border border-outline-subtle/10 bg-surface-low p-7 transition-colors duration-300 hover:bg-surface-high">
+                <Icon className="mb-5 h-5 w-5 text-primary" />
+                <h3 className="font-headline text-[18px] md:text-[20px] font-semibold leading-[26px] md:leading-[28px] tracking-[-0.01em] text-primary mb-2">{title}</h3>
+                <p className="font-body text-[15px] leading-[24px] text-on-surface-dim">{text}</p>
               </div>
             </FadeIn>
           ))}
         </div>
         <FadeIn delay={0.22}>
-          <div className="grid gap-5 border-y border-outline-subtle/10 py-5 lg:grid-cols-[0.6fr_1.4fr]">
-            <h3 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">"This Sounds Too Good. What's the Catch?"</h3>
-            <p className="font-body text-[16px] leading-[24px] text-on-surface-dim">
+          <div className="border-y border-outline-subtle/10 py-10 md:py-14 space-y-6">
+            <h3 className="font-headline text-[20px] md:text-[24px] font-semibold leading-[28px] md:leading-[32px] tracking-[-0.01em] text-primary max-w-lg">
+              "This Sounds Too Good. What's the Catch?"
+            </h3>
+            <p className="font-body text-[16px] leading-[26px] text-on-surface-dim max-w-2xl">
               Fair question. Here's the truth: we make our money over time, not upfront. We break even around the
               two-year mark, then it becomes worth it for us. That model only works if you're happy enough to stay — so
               we have every reason to do great work and keep you satisfied. No contracts. No pressure. If you ever want
@@ -421,15 +614,15 @@ const PricingSection = () => {
           </div>
         </FadeIn>
         <FadeIn delay={0.28}>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 pt-4">
             {[
               ['No surprise invoices', 'Small edits, hosting care, and support are folded into one predictable plan.'],
               ['No platform lock-in', 'If you leave, the files and domain go with you. That should be normal.'],
               ['No template ceiling', 'The site can grow as the business changes because the code is not boxed in.'],
             ].map(([title, text]) => (
-              <div key={title} className="border-l border-outline-subtle/15 pl-4">
-                <h4 className="font-headline text-[24px] font-semibold leading-[32px] tracking-[-0.01em] text-primary">{title}</h4>
-                <p className="mt-2 font-body text-[16px] leading-[24px] text-on-surface-dim">{text}</p>
+              <div key={title} className="border-l-2 border-outline-subtle/20 pl-5 py-1">
+                <h4 className="font-headline text-[18px] md:text-[20px] font-semibold leading-[26px] md:leading-[28px] tracking-[-0.01em] text-primary mb-2">{title}</h4>
+                <p className="font-body text-[15px] leading-[24px] text-on-surface-dim">{text}</p>
               </div>
             ))}
           </div>
@@ -661,17 +854,12 @@ const ContactSection = () => (
 );
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [startReveal, setStartReveal] = useState(false);
   const [activeTab, setActiveTab] = useState('Home');
   const cooldownRef = useRef(false);
   const touchStartYRef = useRef(null);
   const touchScrollElRef = useRef(null);
-
-  useEffect(() => {
-    const styleEl = document.createElement('style');
-    styleEl.innerHTML = customStyles;
-    document.head.appendChild(styleEl);
-    return () => document.head.removeChild(styleEl);
-  }, []);
 
   const moveToTab = (tab) => {
     if (!tabs.includes(tab)) return;
@@ -702,6 +890,7 @@ export default function App() {
   };
 
   const handleWheel = (event) => {
+    if (loading) return; // Disable scroll transitions during preloader
     if (Math.abs(event.deltaY) < 24) return;
     const direction = event.deltaY > 0 ? 1 : -1;
     if (!isAtScrollEdge(getScrollElement(event.target), direction)) return;
@@ -709,11 +898,13 @@ export default function App() {
   };
 
   const handleTouchStart = (event) => {
+    if (loading) return; // Disable scroll transitions during preloader
     touchStartYRef.current = event.touches[0].clientY;
     touchScrollElRef.current = getScrollElement(event.target);
   };
 
   const handleTouchEnd = (event) => {
+    if (loading) return; // Disable scroll transitions during preloader
     if (touchStartYRef.current === null) return;
     const deltaY = touchStartYRef.current - event.changedTouches[0].clientY;
     touchStartYRef.current = null;
@@ -759,59 +950,83 @@ export default function App() {
   };
 
   return (
-    <div
-      className="relative h-screen w-full overflow-hidden bg-black text-white selection:bg-white selection:text-black"
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <AnimatePresence initial={false}>
-        <motion.main
-          key={activeTab}
-          initial={{ y: '100%', zIndex: 20, boxShadow: '0 -40px 80px rgba(0,0,0,0.8)' }}
-          animate={{ y: 0, zIndex: 20, boxShadow: '0 0px 0px rgba(0,0,0,0)', scale: 1, opacity: 1 }}
-          exit={{ y: 0, scale: 0.94, opacity: 0.6, zIndex: 10, filter: 'blur(2px)' }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 h-full w-full overflow-hidden"
-          style={{ backgroundColor: getTabColor(activeTab) }}
-        >
-          <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-4 py-5 sm:px-6 lg:px-10">
-            <button onClick={() => moveToTab('Home')} className="font-logo text-2xl tracking-normal text-white">
-              SiteKeep
-            </button>
-            <span className="hidden text-sm font-semibold text-zinc-400 sm:inline-flex">
-              Free build. $30/month care.
-            </span>
-          </header>
-          <div className="h-full">{renderContent(activeTab)}</div>
-        </motion.main>
-      </AnimatePresence>
-      <div className="fixed bottom-5 left-0 z-50 flex w-full justify-center px-3 pointer-events-none sm:bottom-8">
-        <nav className="pointer-events-auto relative flex max-w-full items-center overflow-x-auto rounded-full border border-white/10 bg-zinc-950/90 p-1.5 shadow-2xl backdrop-blur-xl">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab;
-            return (
-              <button
-                key={tab}
-                onClick={() => moveToTab(tab)}
-                className={`
-                  relative z-10 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300 sm:px-6
-                  ${isActive ? 'text-black' : 'text-zinc-400 hover:text-zinc-200'}
-                `}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activePill"
-                    className="absolute inset-0 -z-10 rounded-full bg-white"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                  />
-                )}
-                {tab}
+    <PreloaderContext.Provider value={{ startReveal }}>
+      <div
+        className="relative h-screen w-full overflow-hidden bg-black text-white selection:bg-white selection:text-black"
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <style dangerouslySetInnerHTML={{__html: `
+          @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+          .font-glitch { font-family: 'Rubik Glitch', system-ui; }
+          
+          ::-webkit-scrollbar { width: 6px; }
+          ::-webkit-scrollbar-track { background: transparent; }
+          ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+          ::-webkit-scrollbar-thumb:hover { background: #71717a; }
+        `}} />
+
+        <AnimatePresence initial={false}>
+          <motion.main
+            key={activeTab}
+            initial={{ y: '100%', zIndex: 20, boxShadow: '0 -40px 80px rgba(0,0,0,0.8)' }}
+            animate={{ y: 0, zIndex: 20, boxShadow: '0 0px 0px rgba(0,0,0,0)', scale: 1, opacity: 1 }}
+            exit={{ y: 0, scale: 0.94, opacity: 0.6, zIndex: 10, filter: 'blur(2px)' }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 h-full w-full overflow-hidden"
+            style={{ backgroundColor: getTabColor(activeTab) }}
+          >
+            <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-4 py-5 sm:px-6 lg:px-10">
+              <button onClick={() => moveToTab('Home')} className="font-logo text-2xl tracking-normal text-white cursor-pointer bg-transparent border-none">
+                SiteKeep
               </button>
-            );
-          })}
-        </nav>
+              <span className="hidden text-sm font-semibold text-zinc-400 sm:inline-flex">
+                Free build. $30/month care.
+              </span>
+            </header>
+            <div className="h-full">{renderContent(activeTab)}</div>
+          </motion.main>
+        </AnimatePresence>
+
+        {/* Floating Navigation Bar */}
+        <div className="fixed bottom-5 left-0 z-50 flex w-full justify-center px-3 pointer-events-none sm:bottom-8">
+          <nav className="pointer-events-auto relative flex max-w-full items-center overflow-x-auto rounded-full border border-white/10 bg-zinc-950/90 p-1.5 shadow-2xl backdrop-blur-xl">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => moveToTab(tab)}
+                  className={`
+                    relative z-10 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition-colors duration-300 sm:px-6 cursor-pointer bg-transparent border-none
+                    ${isActive ? 'text-black font-semibold' : 'text-zinc-400 hover:text-zinc-200'}
+                  `}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activePill"
+                      className="absolute inset-0 -z-10 rounded-full bg-white"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  {tab}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Preloader Overlay */}
+        <AnimatePresence>
+          {loading && (
+            <Preloader 
+              onReveal={() => setStartReveal(true)} 
+              onComplete={() => setLoading(false)} 
+            />
+          )}
+        </AnimatePresence>
       </div>
-    </div>
+    </PreloaderContext.Provider>
   );
 }
