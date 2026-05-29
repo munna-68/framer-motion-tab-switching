@@ -26,60 +26,114 @@ const tabs = ["Home", "How It Works", "Pricing", "Work", "Contact"];
 const projects = [
   {
     title: "Local Cafe Refresh",
+    category: "Hospitality case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
     description:
       "A warm, fast site for a neighborhood cafe with menus, hours, and mobile-first directions.",
     fullDescription:
       "A compact business site built to help regulars check hours quickly and help new customers find the cafe from local search.",
+    process: [
+      "Mapped the menu, hours, and route info into a single glanceable homepage.",
+      "Designed a soft editorial layout that feels welcoming on mobile.",
+      "Kept the code lean so the site loads quickly even on weak connections.",
+    ],
+    outcomes: ["Faster mobile browsing", "Clearer hours + directions", "More local search visibility"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
   },
   {
     title: "Contractor Quote Site",
+    category: "Lead generation case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
     description:
       "A lead-focused website for a home services company with clear service pages and calls to action.",
     fullDescription:
       "A hand-coded site structured around service areas, trust signals, and a simple request flow for homeowners.",
+    process: [
+      "Built the homepage around trust, urgency, and one simple action.",
+      "Separated services into clean blocks so visitors can self-select fast.",
+      "Kept forms and calls to action consistent everywhere on the site.",
+    ],
+    outcomes: ["Fewer dropped leads", "Stronger trust signals", "Cleaner quote flow"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
   },
   {
     title: "Salon Booking Launch",
+    category: "Service brand case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
     description:
       "A polished salon site designed around services, pricing, photos, and booking links.",
     fullDescription:
       "A clean launch site for a service business that needed credibility, fast mobile performance, and easy updates.",
+    process: [
+      "Used a magazine-like rhythm so the site feels premium without becoming heavy.",
+      "Balanced service cards, pricing, and booking actions for fast decision-making.",
+      "Made content easy to update so the owner can keep it current.",
+    ],
+    outcomes: ["Clear booking flow", "Stronger visual polish", "Easy content updates"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
   },
   {
     title: "Fitness Coach Brand",
+    category: "Personal brand case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
     description:
       "A bold personal brand site with programs, testimonials, and a direct inquiry path.",
     fullDescription:
       "A conversion-minded site for a solo operator who needed a memorable first impression and low-friction leads.",
+    process: [
+      "Built a strong hero with a direct promise and clear social proof.",
+      "Structured the page like a story: problem, offer, proof, and next step.",
+      "Kept the layout tight so the message stays consistent on every screen size.",
+    ],
+    outcomes: ["Clearer positioning", "Stronger trust", "Simpler inquiry path"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
   },
   {
     title: "Dental Office Starter",
+    category: "Local SEO case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80",
     description:
       "A calm, trustworthy local site for services, insurance details, and patient contact.",
     fullDescription:
       "A practical healthcare-adjacent marketing site with accessible content structure and local SEO basics.",
+    process: [
+      "Focused the design on reassurance, clarity, and quick access to core info.",
+      "Organized insurance, services, and contact details into predictable blocks.",
+      "Added SEO structure so nearby patients can actually find the office.",
+    ],
+    outcomes: ["More accessible navigation", "Better local search structure", "Faster patient answers"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
   },
   {
     title: "Boutique Retail Site",
+    category: "Retail launch case study",
+    imageSrc:
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
     description:
       "A sharp storefront presence with product highlights, location details, and social proof.",
     fullDescription:
       "A visual business site for a retail shop that needed better local discovery without maintaining a large catalog.",
+    process: [
+      "Mixed product photography with concise copy so the shop feels premium and scannable.",
+      "Kept location and contact info persistent for immediate action.",
+      "Made the design modular so future promos and seasonal updates stay consistent.",
+    ],
+    outcomes: ["Stronger storefront feel", "Easier seasonal updates", "Better local discovery"],
     videoSrc: null,
     githubUrl: null,
     liveUrl: null,
@@ -434,6 +488,39 @@ const VideoPlaceholder = ({ src, large = false }) => (
   </div>
 );
 
+const revealUpVariants = {
+  hidden: { opacity: 0, y: 42 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      delay,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
+const CaseStudyImage = ({ src, alt, className = "" }) => (
+  <div className={`group relative overflow-hidden rounded-[20px] border border-white/10 bg-zinc-950 ${className}`}>
+    <motion.div
+      className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.5)_100%)] z-10"
+      initial={{ opacity: 0.2 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    />
+    <motion.img
+      src={src}
+      alt={alt}
+      initial={{ y: 42, opacity: 0, scale: 1.05 }}
+      animate={{ y: 0, opacity: 1, scale: 1 }}
+      transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full w-full object-cover"
+      loading="lazy"
+    />
+  </div>
+);
+
 const LinkButton = ({ href, children, variant = "solid", icon: Icon }) => {
   const disabled = !href;
   const classes =
@@ -660,7 +747,6 @@ const HowItWorksSection = () => {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </SectionShell>
@@ -726,7 +812,9 @@ const PricingSection = () => {
         <section className="monolith-section monolith-hero-section">
           <div className="monolith-container">
             <header className="monolith-header">
-              <h1 className="monolith-display-title">Your $30/Month Keeps Everything Running</h1>
+              <h1 className="monolith-display-title">
+                Your $30/Month Keeps Everything Running
+              </h1>
               <p className="monolith-subtitle">See how SiteKeep compares.</p>
             </header>
           </div>
@@ -874,10 +962,16 @@ const PricingSection = () => {
                 <ShieldCheck className="essentials-icon" />
               </div>
               <div className="essentials-content">
-                <h2 className="essentials-title">All the essentials. One simple price.</h2>
+                <h2 className="essentials-title">
+                  All the essentials. One simple price.
+                </h2>
                 <div className="essentials-details">
-                  <p className="essentials-text">No hidden fees, no surprises.</p>
-                  <p className="essentials-text highlight-line">Just a site that works — for $30/month.</p>
+                  <p className="essentials-text">
+                    No hidden fees, no surprises.
+                  </p>
+                  <p className="essentials-text highlight-line">
+                    Just a site that works — for $30/month.
+                  </p>
                 </div>
               </div>
             </div>
@@ -889,27 +983,66 @@ const PricingSection = () => {
           <div className="monolith-container">
             <header className="monolith-header">
               <h2 className="monolith-title">What Your $30/Month Covers</h2>
-              <p className="monolith-subtitle">No surprise invoices. No platform fees. Just one number that covers everything.</p>
+              <p className="monolith-subtitle">
+                No surprise invoices. No platform fees. Just one number that
+                covers everything.
+              </p>
             </header>
 
             <div className="monolith-grid">
               <div className="monolith-card">
                 <div className="monolith-icon-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="monolith-icon"
+                  >
+                    <rect width="20" height="8" x="2" y="2" rx="2" ry="2" />
+                    <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />
+                    <line x1="6" x2="6.01" y1="6" y2="6" />
+                    <line x1="6" x2="6.01" y1="18" y2="18" />
+                  </svg>
                 </div>
                 <div className="monolith-card-content">
                   <h3 className="monolith-card-title">Hosting</h3>
-                  <p className="monolith-card-text">Your site lives on fast, reliable infrastructure. No separate hosting bill.</p>
+                  <p className="monolith-card-text">
+                    Your site lives on fast, reliable infrastructure. No
+                    separate hosting bill.
+                  </p>
                 </div>
               </div>
 
               <div className="monolith-card">
                 <div className="monolith-icon-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="monolith-icon"
+                  >
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
                 </div>
                 <div className="monolith-card-content">
                   <h3 className="monolith-card-title">SSL Certificate</h3>
-                  <p className="monolith-card-text">Your site is secured with HTTPS, keeping visitors and search engines happy.</p>
+                  <p className="monolith-card-text">
+                    Your site is secured with HTTPS, keeping visitors and search
+                    engines happy.
+                  </p>
                 </div>
               </div>
 
@@ -919,50 +1052,107 @@ const PricingSection = () => {
                 </div>
                 <div className="monolith-card-content">
                   <h3 className="monolith-card-title">Security Updates</h3>
-                  <p className="monolith-card-text">We monitor and patch vulnerabilities before they become problems.</p>
+                  <p className="monolith-card-text">
+                    We monitor and patch vulnerabilities before they become
+                    problems.
+                  </p>
                 </div>
               </div>
 
               <div className="monolith-card">
                 <div className="monolith-icon-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="monolith-icon"
+                  >
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
                 </div>
                 <div className="monolith-card-content">
                   <h3 className="monolith-card-title">Uptime Monitoring</h3>
-                  <p className="monolith-card-text">If your site ever goes down, we know about it before you do.</p>
+                  <p className="monolith-card-text">
+                    If your site ever goes down, we know about it before you do.
+                  </p>
                 </div>
               </div>
 
               <div className="monolith-card">
                 <div className="monolith-icon-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="monolith-icon"
+                  >
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
                 </div>
                 <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">Performance Maintenance</h3>
-                  <p className="monolith-card-text">Regular checks to keep your site loading fast and running clean.</p>
+                  <h3 className="monolith-card-title">
+                    Performance Maintenance
+                  </h3>
+                  <p className="monolith-card-text">
+                    Regular checks to keep your site loading fast and running
+                    clean.
+                  </p>
                 </div>
               </div>
 
               <div className="monolith-card">
                 <div className="monolith-icon-box">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="monolith-icon"
+                  >
+                    <polyline points="23 4 23 10 17 10" />
+                    <polyline points="1 20 1 14 7 14" />
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                  </svg>
                 </div>
                 <div className="monolith-card-content">
                   <h3 className="monolith-card-title">Backup & Recovery</h3>
-                  <p className="monolith-card-text">Your site is backed up regularly so nothing is ever lost.</p>
+                  <p className="monolith-card-text">
+                    Your site is backed up regularly so nothing is ever lost.
+                  </p>
                 </div>
               </div>
             </div>
 
             <footer className="monolith-footer">
-              <p className="monolith-footer-text">All plans include everything above. Cancel anytime.</p>
+              <p className="monolith-footer-text">
+                All plans include everything above. Cancel anytime.
+              </p>
             </footer>
           </div>
         </section>
 
         {/* SECTION 5: Small Footer Note */}
         <footer className="monolith-page-footer">
-          <p className="monolith-legal-note">Pricing shown for small business brochure-style websites.</p>
+          <p className="monolith-legal-note">
+            Pricing shown for small business brochure-style websites.
+          </p>
         </footer>
       </div>
     </SectionShell>
@@ -977,26 +1167,30 @@ const WorkSection = () => {
   return (
     <SectionShell>
       <div className="w-full py-4 md:py-8">
-        <div className="mb-8 text-center md:mb-16">
+        <div className="mb-10 text-center md:mb-16">
           <div className="mx-auto max-w-3xl">
+            <p className="mb-3 font-label text-[10px] font-semibold uppercase tracking-[0.24em] text-on-surface-dim/50 sm:text-xs">
+              Case studies
+            </p>
             <h1 className="mb-3 font-headline text-[28px] font-bold leading-[34px] tracking-[-0.02em] text-primary sm:text-[32px] sm:leading-[38px] md:text-[48px] md:leading-[56px]">
-              Built for Businesses Like Yours
+              Built to stay consistent over time
             </h1>
             <p className="font-body text-[16px] leading-[26px] text-on-surface-dim sm:text-[18px] sm:leading-[28px]">
-              Every site is hand-coded from scratch. No templates, no page
-              builders.
+              I design, hand-code, and maintain sites so the visuals, messaging,
+              and performance stay aligned after launch.
             </p>
           </div>
         </div>
+
         <div className="mb-6 flex flex-wrap items-center gap-4 sm:mb-8 sm:gap-6 md:gap-12">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-dim/40">
-            Filters
+            What I publish
           </span>
           <div className="flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-8 sm:gap-y-4">
             {[
-              "Small business sites",
-              "Service pages and lead forms",
-              "Launch plus monthly care",
+              "Case studies with images",
+              "Implementation notes",
+              "Repeatable process + support",
             ].map((item, index) => (
               <p
                 key={item}
@@ -1011,49 +1205,65 @@ const WorkSection = () => {
             ))}
           </div>
         </div>
+
         <div className="overflow-hidden">
-          <motion.div
-            layout
-            className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pr-0 sm:gap-6 sm:pb-8 md:pr-16"
-          >
+          <motion.div layout className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pr-0 sm:gap-6 sm:pb-8 md:pr-16">
             <AnimatePresence initial={false}>
               {visibleProjects.map((project, index) => (
                 <motion.article
                   layout
                   key={project.title}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 42 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 18 }}
+                  exit={{ opacity: 0, y: 28 }}
                   transition={{
-                    duration: 0.35,
-                    delay: index >= 3 ? (index - 3) * 0.05 : 0,
+                    duration: 0.7,
+                    delay: index * 0.08,
+                    ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="group flex min-w-[85vw] snap-start flex-col overflow-hidden rounded-xl border border-outline-subtle/20 bg-surface-low transition-colors duration-300 hover:bg-surface-high sm:min-w-[70vw] md:min-w-[40%] lg:min-w-[38%]"
+                  className="group flex min-w-[86vw] snap-start flex-col overflow-hidden rounded-[24px] border border-outline-subtle/20 bg-surface-low transition-colors duration-300 hover:bg-surface-high sm:min-w-[70vw] md:min-w-[42%] lg:min-w-[38%]"
                 >
-                  <div className="aspect-[16/10] overflow-hidden bg-surface-high">
-                    <VideoPlaceholder src={project.videoSrc} />
-                  </div>
+                  <CaseStudyImage
+                    src={project.imageSrc}
+                    alt={project.title}
+                    className="aspect-[4/3] rounded-none border-0"
+                  />
                   <div className="flex flex-grow flex-col p-5 sm:p-8">
-                    <h3 className="mb-2 font-headline text-[20px] font-semibold leading-[28px] tracking-[-0.01em] text-primary sm:mb-3 sm:text-[24px] sm:leading-[32px]">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <span className="font-label text-[10px] font-semibold uppercase tracking-[0.22em] text-on-surface-dim/55 sm:text-xs">
+                        {project.category}
+                      </span>
+                      <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-label text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-300 sm:text-xs">
+                        4 min read
+                      </span>
+                    </div>
+                    <h3 className="mb-3 font-headline text-[22px] font-semibold leading-[30px] tracking-[-0.01em] text-primary sm:text-[28px] sm:leading-[34px]">
                       {project.title}
                     </h3>
-                    <p className="mb-6 min-h-10 flex-grow font-body text-[15px] leading-[24px] text-on-surface-dim sm:mb-8 sm:min-h-12 sm:text-[16px] sm:leading-[24px]">
+                    <p className="mb-6 font-body text-[15px] leading-[24px] text-on-surface-dim sm:mb-8 sm:text-[16px] sm:leading-[24px]">
                       {project.description}
                     </p>
-                    <div className="flex items-center justify-between gap-3 sm:gap-4">
-                      <div className="flex gap-2">
-                        <LinkButton
-                          href={project.githubUrl}
-                          variant="outline"
-                          icon={Github}
+
+                    <div className="mb-5 grid gap-2 sm:mb-6">
+                      {project.outcomes.slice(0, 3).map((outcome) => (
+                        <div
+                          key={outcome}
+                          className="flex items-center gap-2 rounded-full border border-white/8 bg-white/[0.03] px-3 py-2"
                         >
+                          <Check className="h-3.5 w-3.5 text-primary" />
+                          <span className="font-body text-[13px] leading-[20px] text-zinc-300 sm:text-sm">
+                            {outcome}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-auto flex items-center justify-between gap-3 sm:gap-4">
+                      <div className="flex gap-2">
+                        <LinkButton href={project.githubUrl} variant="outline" icon={Github}>
                           <span className="sr-only">GitHub</span>
                         </LinkButton>
-                        <LinkButton
-                          href={project.liveUrl}
-                          variant="outline"
-                          icon={Globe2}
-                        >
+                        <LinkButton href={project.liveUrl} variant="outline" icon={Globe2}>
                           <span className="sr-only">Live Site</span>
                         </LinkButton>
                       </div>
@@ -1061,7 +1271,7 @@ const WorkSection = () => {
                         onClick={() => setSelectedProject(project)}
                         className="rounded-full bg-primary px-4 py-1.5 font-label text-[11px] font-bold text-on-primary transition-colors hover:bg-on-surface sm:px-6 sm:py-2 sm:text-xs"
                       >
-                        Details
+                        Read Case Study
                       </button>
                     </div>
                   </div>
@@ -1076,16 +1286,17 @@ const WorkSection = () => {
                 <div className="h-1 w-6 rounded-full bg-outline-subtle/30 sm:w-8" />
                 <div className="h-1 w-6 rounded-full bg-outline-subtle/30 sm:w-8" />
               </div>
-              <button
+              <AnimatedButton
                 onClick={() =>
                   setVisibleCount((count) =>
                     Math.min(count + 3, projects.length),
                   )
                 }
+                showArrowAnimation
                 className="flex items-center gap-2 font-label text-[11px] font-bold text-primary transition-all hover:underline sm:text-xs"
               >
-                Show More <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </button>
+                Show More
+              </AnimatedButton>
             </div>
           )}
         </div>
@@ -1102,79 +1313,163 @@ const ProjectModal = ({ project, onClose }) => (
   <AnimatePresence>
     {project && (
       <motion.div
-        className="fixed inset-0 z-[90] grid place-items-center bg-black/80 p-3 backdrop-blur-sm sm:p-4"
+        className="fixed inset-0 z-[90] grid place-items-end bg-black/80 p-3 backdrop-blur-sm sm:place-items-center sm:p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.92, y: 20 }}
-          transition={{ type: "spring", stiffness: 260, damping: 24 }}
+          initial={{ opacity: 0, y: 72 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 72 }}
+          transition={{ type: "spring", stiffness: 240, damping: 26 }}
           onClick={(event) => event.stopPropagation()}
           onWheel={(event) => event.stopPropagation()}
           onTouchStart={(event) => event.stopPropagation()}
           onTouchEnd={(event) => event.stopPropagation()}
-          className="max-h-[90vh] w-full max-w-4xl overflow-y-auto border border-white/20 bg-black p-3 text-white shadow-2xl sm:p-4 md:max-h-[92vh]"
+          className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-[28px] border border-white/15 bg-[linear-gradient(180deg,#111111_0%,#090909_100%)] p-4 text-white shadow-[0_40px_120px_rgba(0,0,0,0.65)] sm:p-6"
         >
-          <div className="mb-3 flex justify-end sm:mb-4">
+          <div className="flex justify-end pb-2 sm:pb-4">
             <button
               onClick={onClose}
-              className="grid h-8 w-8 place-items-center rounded-full border border-white/20 text-white transition hover:bg-white hover:text-black sm:h-10 sm:w-10"
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black sm:h-10 sm:w-10"
               aria-label="Close project details"
             >
               <X className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
-          <VideoPlaceholder src={project.videoSrc} large />
-          <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-            <div>
-              <h3 className="text-2xl font-black sm:text-3xl">
-                {project.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-zinc-300 sm:mt-3 sm:leading-7">
-                {project.fullDescription || project.description}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-3">
+
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
+            <motion.div
+              className="space-y-4 sm:space-y-5"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+              }}
+            >
+              <motion.div variants={revealUpVariants} custom={0} className="space-y-3">
+                <p className="font-label text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500 sm:text-xs">
+                  {project.category}
+                </p>
+                <h3 className="max-w-2xl font-headline text-[28px] font-bold leading-[32px] tracking-[-0.03em] text-primary sm:text-[36px] sm:leading-[40px]">
+                  {project.title}
+                </h3>
+                <p className="max-w-2xl font-body text-[15px] leading-[24px] text-zinc-300 sm:text-[16px] sm:leading-[26px]">
+                  {project.fullDescription || project.description}
+                </p>
+              </motion.div>
+
+              <motion.div variants={revealUpVariants} custom={0.05}>
+                <CaseStudyImage
+                  src={project.imageSrc}
+                  alt={project.title}
+                  className="aspect-[16/10]"
+                />
+              </motion.div>
+
+              <motion.div variants={revealUpVariants} custom={0.1} className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                  <p className="font-label text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+                    How I implement it
+                  </p>
+                  <div className="mt-3 space-y-3">
+                    {project.process.map((item) => (
+                      <div key={item} className="flex gap-3">
+                        <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
+                        <p className="font-body text-[14px] leading-[22px] text-zinc-300 sm:text-[15px] sm:leading-[24px]">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                  <p className="font-label text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+                    Consistent results
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.outcomes.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-white/10 bg-black/40 px-3 py-2 font-body text-[13px] leading-none text-zinc-200"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-4 font-body text-[14px] leading-[22px] text-zinc-400 sm:text-[15px] sm:leading-[24px]">
+                    I keep the design system, spacing, and content flow repeatable so the site stays coherent when it grows.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <motion.aside
+              className="space-y-4 sm:space-y-5"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08, delayChildren: 0.12 } },
+              }}
+            >
+              <motion.div variants={revealUpVariants} custom={0} className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                <p className="font-label text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+                  What makes it feel consistent
+                </p>
+                <ul className="mt-3 space-y-3">
+                  {[
+                    "One visual rhythm across cards, headings, and buttons.",
+                    "Reusable layouts that keep content updates predictable.",
+                    "Lightweight motion that always reveals from the bottom.",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span className="font-body text-[14px] leading-[22px] text-zinc-300 sm:text-[15px] sm:leading-[24px]">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              <motion.div variants={revealUpVariants} custom={0.08} className="overflow-hidden rounded-[22px] border border-white/10 bg-black/40">
+                <div className="border-b border-white/10 px-4 py-3 sm:px-5 sm:py-4">
+                  <p className="font-label text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500 sm:text-xs">
+                    Implementation notes
+                  </p>
+                </div>
+                <div className="space-y-0">
+                  {[
+                    ["Structure", "Clear hierarchy from hero to proof to action."],
+                    ["Motion", "Bottom-up reveals with soft spring timing."],
+                    ["Maintenance", "Easy to update without breaking the layout."],
+                  ].map(([label, value], index) => (
+                    <div key={label} className={`grid grid-cols-[0.9fr_1.1fr] gap-3 px-4 py-4 sm:px-5 ${index !== 2 ? "border-b border-white/10" : ""}`}>
+                      <span className="font-label text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:text-xs">
+                        {label}
+                      </span>
+                      <span className="font-body text-[14px] leading-[22px] text-zinc-300 sm:text-[15px] sm:leading-[24px]">
+                        {value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div variants={revealUpVariants} custom={0.16} className="flex flex-wrap gap-3">
                 <LinkButton href={project.githubUrl} icon={Github}>
                   GitHub
                 </LinkButton>
-                <LinkButton
-                  href={project.liveUrl}
-                  variant="outline"
-                  icon={Globe2}
-                >
+                <LinkButton href={project.liveUrl} variant="outline" icon={Globe2}>
                   Live Site
                 </LinkButton>
-              </div>
-            </div>
-            <div>
-              <h4 className="mb-3 text-lg font-black sm:mb-4 sm:text-xl">
-                My Process
-              </h4>
-              <div className="grid gap-2 sm:gap-3">
-                {processSteps.map((step, index) => (
-                  <div
-                    key={step.title}
-                    className="grid grid-cols-[2rem_1fr] gap-2 sm:grid-cols-[2.5rem_1fr] sm:gap-3"
-                  >
-                    <span className="grid h-7 w-7 place-items-center border border-white/20 bg-white text-xs font-black text-black sm:h-9 sm:w-9 sm:text-sm">
-                      {index + 1}
-                    </span>
-                    <div className="border-b border-white/10 pb-2 sm:pb-3">
-                      <h5 className="text-sm font-black sm:text-base">
-                        {step.title}
-                      </h5>
-                      <p className="mt-0.5 text-xs leading-5 text-zinc-300 sm:mt-1 sm:text-sm sm:leading-6">
-                        {step.text}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.aside>
           </div>
         </motion.div>
       </motion.div>
