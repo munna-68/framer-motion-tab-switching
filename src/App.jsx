@@ -850,43 +850,43 @@ const PricingSection = () => {
           <div className="monolith-container">
             <FadeIn delay={0.18}>
               <div className="table-wrapper">
-              <table className="monolith-table">
-                <thead>
-                  <tr>
-                    <th className="col-feature">Feature</th>
-                    <th className="col-highlight text-center">
-                      <div className="highlight-header-container">
-                        <span className="badge-sub-geist">RECOMMENDED</span>
-                        <div className="header-brand-container">
-                          <span className="brand-name">SiteKeep</span>
-                          <span className="brand-tag">YOU</span>
+                <table className="monolith-table">
+                  <thead>
+                    <tr>
+                      <th className="col-feature">Feature</th>
+                      <th className="col-highlight text-center">
+                        <div className="highlight-header-container">
+                          <span className="badge-sub-geist">RECOMMENDED</span>
+                          <div className="header-brand-container">
+                            <span className="brand-name">SiteKeep</span>
+                            <span className="brand-tag">YOU</span>
+                          </div>
                         </div>
-                      </div>
-                    </th>
-                    <th className="col-other text-center">Wix/Squarespace</th>
-                    <th className="col-other text-center">Agency</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((row, rowIndex) => {
-                    const Icon = row.icon;
-                    const isLast = rowIndex === rows.length - 1;
-                    return (
-                      <tr key={`desktop-${row.label}`}>
-                        <td className="cell-feature">
-                          <Icon className="cell-icon" />
-                          {row.label}
-                        </td>
-                        <td className="cell-highlight text-center bold-val highlight-primary">
-                          {row.siteKeep}
-                        </td>
-                        <td className="text-center">{row.wix}</td>
-                        <td className="text-center">{row.agency}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                      </th>
+                      <th className="col-other text-center">Wix/Squarespace</th>
+                      <th className="col-other text-center">Agency</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row, rowIndex) => {
+                      const Icon = row.icon;
+                      const isLast = rowIndex === rows.length - 1;
+                      return (
+                        <tr key={`desktop-${row.label}`}>
+                          <td className="cell-feature">
+                            <Icon className="cell-icon" />
+                            {row.label}
+                          </td>
+                          <td className="cell-highlight text-center bold-val highlight-primary">
+                            {row.siteKeep}
+                          </td>
+                          <td className="text-center">{row.wix}</td>
+                          <td className="text-center">{row.agency}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </FadeIn>
           </div>
@@ -986,22 +986,22 @@ const PricingSection = () => {
           <div className="monolith-container">
             <FadeIn delay={0.22}>
               <div className="essentials-card">
-              <div className="essentials-icon-box">
-                <ShieldCheck className="essentials-icon" />
-              </div>
-              <div className="essentials-content">
-                <h2 className="essentials-title">
-                  All the essentials. One simple price.
-                </h2>
-                <div className="essentials-details">
-                  <p className="essentials-text">
-                    No hidden fees, no surprises.
-                  </p>
-                  <p className="essentials-text highlight-line">
-                    Just a site that works — for $30/month.
-                  </p>
+                <div className="essentials-icon-box">
+                  <ShieldCheck className="essentials-icon" />
                 </div>
-              </div>
+                <div className="essentials-content">
+                  <h2 className="essentials-title">
+                    All the essentials. One simple price.
+                  </h2>
+                  <div className="essentials-details">
+                    <p className="essentials-text">
+                      No hidden fees, no surprises.
+                    </p>
+                    <p className="essentials-text highlight-line">
+                      Just a site that works — for $30/month.
+                    </p>
+                  </div>
+                </div>
               </div>
             </FadeIn>
           </div>
@@ -1024,163 +1024,207 @@ const PricingSection = () => {
             </header>
 
             <FadeIn delay={0.2}>
-              <div className="monolith-grid">
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="monolith-icon"
-                  >
-                    <rect width="20" height="8" x="2" y="2" rx="2" ry="2" />
-                    <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />
-                    <line x1="6" x2="6.01" y1="6" y2="6" />
-                    <line x1="6" x2="6.01" y1="18" y2="18" />
-                  </svg>
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">Hosting</h3>
-                  <p className="monolith-card-text">
-                    Your site lives on fast, reliable infrastructure. No
-                    separate hosting bill.
-                  </p>
-                </div>
-              </div>
+              <motion.div
+                className="monolith-grid"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: { transition: { staggerChildren: 0.08 } },
+                }}
+              >
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0}
+                >
+                  <div className="monolith-icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="monolith-icon"
+                    >
+                      <rect width="20" height="8" x="2" y="2" rx="2" ry="2" />
+                      <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />
+                      <line x1="6" x2="6.01" y1="6" y2="6" />
+                      <line x1="6" x2="6.01" y1="18" y2="18" />
+                    </svg>
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">Hosting</h3>
+                    <p className="monolith-card-text">
+                      Your site lives on fast, reliable infrastructure. No
+                      separate hosting bill.
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="monolith-icon"
-                  >
-                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">SSL Certificate</h3>
-                  <p className="monolith-card-text">
-                    Your site is secured with HTTPS, keeping visitors and search
-                    engines happy.
-                  </p>
-                </div>
-              </div>
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0.05}
+                >
+                  <div className="monolith-icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="monolith-icon"
+                    >
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">SSL Certificate</h3>
+                    <p className="monolith-card-text">
+                      Your site is secured with HTTPS, keeping visitors and
+                      search engines happy.
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <ShieldCheck className="monolith-icon" />
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">Security Updates</h3>
-                  <p className="monolith-card-text">
-                    We monitor and patch vulnerabilities before they become
-                    problems.
-                  </p>
-                </div>
-              </div>
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0.1}
+                >
+                  <div className="monolith-icon-box">
+                    <ShieldCheck className="monolith-icon" />
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">Security Updates</h3>
+                    <p className="monolith-card-text">
+                      We monitor and patch vulnerabilities before they become
+                      problems.
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="monolith-icon"
-                  >
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                  </svg>
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">Uptime Monitoring</h3>
-                  <p className="monolith-card-text">
-                    If your site ever goes down, we know about it before you do.
-                  </p>
-                </div>
-              </div>
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0.15}
+                >
+                  <div className="monolith-icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="monolith-icon"
+                    >
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">Uptime Monitoring</h3>
+                    <p className="monolith-card-text">
+                      If your site ever goes down, we know about it before you
+                      do.
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="monolith-icon"
-                  >
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">
-                    Performance Maintenance
-                  </h3>
-                  <p className="monolith-card-text">
-                    Regular checks to keep your site loading fast and running
-                    clean.
-                  </p>
-                </div>
-              </div>
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0.2}
+                >
+                  <div className="monolith-icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="monolith-icon"
+                    >
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">
+                      Performance Maintenance
+                    </h3>
+                    <p className="monolith-card-text">
+                      Regular checks to keep your site loading fast and running
+                      clean.
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="monolith-card">
-                <div className="monolith-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="monolith-icon"
-                  >
-                    <polyline points="23 4 23 10 17 10" />
-                    <polyline points="1 20 1 14 7 14" />
-                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-                  </svg>
-                </div>
-                <div className="monolith-card-content">
-                  <h3 className="monolith-card-title">Backup & Recovery</h3>
-                  <p className="monolith-card-text">
-                    Your site is backed up regularly so nothing is ever lost.
-                  </p>
-                </div>
-              </div>
-            </div>
+                <motion.div
+                  className="monolith-card"
+                  initial="hidden"
+                  animate="visible"
+                  variants={revealUpVariants}
+                  custom={0.25}
+                >
+                  <div className="monolith-icon-box">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="monolith-icon"
+                    >
+                      <polyline points="23 4 23 10 17 10" />
+                      <polyline points="1 20 1 14 7 14" />
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                  </div>
+                  <div className="monolith-card-content">
+                    <h3 className="monolith-card-title">Backup & Recovery</h3>
+                    <p className="monolith-card-text">
+                      Your site is backed up regularly so nothing is ever lost.
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
             </FadeIn>
 
             <FadeIn delay={0.28}>
               <footer className="monolith-footer">
-              <p className="monolith-footer-text">
-                All plans include everything above. Cancel anytime.
-              </p>
+                <p className="monolith-footer-text">
+                  All plans include everything above. Cancel anytime.
+                </p>
               </footer>
             </FadeIn>
           </div>
@@ -1218,8 +1262,8 @@ const WorkSection = () => {
             </h1>
             <FadeIn delay={0.16}>
               <p className="font-body text-[16px] leading-[26px] text-on-surface-dim sm:text-[18px] sm:leading-[28px]">
-                I design, hand-code, and maintain sites so the visuals, messaging,
-                and performance stay aligned after launch.
+                I design, hand-code, and maintain sites so the visuals,
+                messaging, and performance stay aligned after launch.
               </p>
             </FadeIn>
           </div>
@@ -1269,11 +1313,13 @@ const WorkSection = () => {
                   }}
                   className="group flex min-w-[86vw] snap-start flex-col overflow-hidden rounded-[24px] border border-outline-subtle/20 bg-surface-low transition-colors duration-300 hover:bg-surface-high sm:min-w-[70vw] md:min-w-[42%] lg:min-w-[38%]"
                 >
-                  <CaseStudyImage
-                    src={project.imageSrc}
-                    alt={project.title}
-                    className="aspect-[4/3] rounded-none border-0"
-                  />
+                  <motion.div variants={revealUpVariants} custom={0.04}>
+                    <CaseStudyImage
+                      src={project.imageSrc}
+                      alt={project.title}
+                      className="aspect-[4/3] rounded-none border-0"
+                    />
+                  </motion.div>
                   <div className="flex flex-grow flex-col p-5 sm:p-8">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <span className="font-label text-[10px] font-semibold uppercase tracking-[0.22em] text-on-surface-dim/55 sm:text-xs">
@@ -1579,67 +1625,75 @@ const ContactSection = () => (
         </h1>
         <FadeIn delay={0.16}>
           <p className="mx-auto max-w-2xl font-body text-[16px] leading-[26px] text-on-surface-dim sm:text-[18px] sm:leading-[28px]">
-            Tell us a little about your business and we'll take it from there. No
-            commitment, no credit card.
+            Tell us a little about your business and we'll take it from there.
+            No commitment, no credit card.
           </p>
         </FadeIn>
       </div>
-      <div className="grid grid-cols-1 gap-5 border-y border-outline-subtle/10 py-6 sm:gap-6 sm:py-8 md:grid-cols-3">
-        {[
-          ["Reply time", "Usually same day"],
-          ["First call", "15 minutes"],
-          ["Payment", "Only after launch"],
-        ].map(([label, value], index) => (
-          <div
-            key={label}
-            className={`space-y-1 ${index === 1 ? "border-y border-outline-subtle/10 py-5 md:border-y-0 md:border-x md:py-0" : ""}`}
-          >
-            <p className="font-label text-[11px] font-medium uppercase tracking-[0.05em] text-on-surface-dim sm:text-xs">
-              {label}
-            </p>
-            <p className="font-headline text-[20px] font-semibold leading-[28px] tracking-[-0.01em] text-primary sm:text-[24px] sm:leading-[32px]">
-              {value}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="relative overflow-hidden rounded-lg border border-outline-subtle/10 bg-surface-low p-5 text-left sm:p-8 md:p-12 group">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-transform duration-700 group-hover:scale-110" />
-        <form
-          className="relative z-10 space-y-6 sm:space-y-8"
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
-            {[
-              "Your Name",
-              "Business Name",
-              "Business Type",
-              "Phone or Email",
-            ].map((label) => (
-              <div key={label} className="space-y-2 sm:space-y-3">
-                <label className="ml-1 block font-label text-[11px] font-medium uppercase tracking-[0.05em] text-on-surface-dim sm:text-xs">
+      <FadeIn delay={0.2}>
+        <div className="grid grid-cols-1 gap-5 border-y border-outline-subtle/10 py-6 sm:gap-6 sm:py-8 md:grid-cols-3">
+          {[
+            ["Reply time", "Usually same day"],
+            ["First call", "15 minutes"],
+            ["Payment", "Only after launch"],
+          ].map(([label, value], index) => (
+            <FadeIn key={label} delay={index * 0.08}>
+              <div
+                className={`space-y-1 ${index === 1 ? "border-y border-outline-subtle/10 py-5 md:border-y-0 md:border-x md:py-0" : ""}`}
+              >
+                <p className="font-label text-[11px] font-medium uppercase tracking-[0.05em] text-on-surface-dim sm:text-xs">
                   {label}
-                </label>
-                <input
-                  className="monolith-input w-full rounded-full border border-outline-subtle/10 bg-surface px-4 py-3 font-body text-[15px] leading-[24px] text-primary placeholder:text-outline/50 transition-all sm:px-6 sm:py-4 sm:text-[16px] sm:leading-[24px]"
-                  placeholder={label}
-                />
+                </p>
+                <p className="font-headline text-[20px] font-semibold leading-[28px] tracking-[-0.01em] text-primary sm:text-[24px] sm:leading-[32px]">
+                  {value}
+                </p>
               </div>
-            ))}
-          </div>
-          <AnimatedButton
-            type="submit"
-            showArrowAnimation
-            className="flex w-full items-center justify-center gap-3 rounded-full bg-primary py-5 font-headline text-[18px] leading-[26px] tracking-[-0.01em] font-semibold text-surface shadow-[0_18px_40px_rgba(255,255,255,0.12)] transition-colors hover:shadow-[0_24px_55px_rgba(255,255,255,0.18)] sm:py-6 sm:text-[24px] sm:leading-[32px]"
-          >
-            Let's Build It
-          </AnimatedButton>
-        </form>
-        <p className="mt-6 text-center font-label text-[10px] font-medium text-on-surface-dim/60 sm:mt-8 sm:text-xs">
-          Send the basics now. We can collect photos, domain details, menu PDFs,
-          service lists, and brand notes after we know the business.
-        </p>
-      </div>
+            </FadeIn>
+          ))}
+        </div>
+      </FadeIn>
+      <FadeIn delay={0.3}>
+        <div className="relative overflow-hidden rounded-lg border border-outline-subtle/10 bg-surface-low p-5 text-left group sm:p-8 md:p-12">
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-transform duration-700 group-hover:scale-110" />
+          <form className="relative z-10 space-y-6 sm:space-y-8" onSubmit={(event) => event.preventDefault()}>
+            <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
+              {[
+                "Your Name",
+                "Business Name",
+                "Business Type",
+                "Phone or Email",
+              ].map((label, index) => (
+                <FadeIn key={label} delay={index * 0.08}>
+                  <div className="space-y-2 sm:space-y-3">
+                    <label className="ml-1 block font-label text-[11px] font-medium uppercase tracking-[0.05em] text-on-surface-dim sm:text-xs">
+                      {label}
+                    </label>
+                    <input
+                      className="monolith-input w-full rounded-full border border-outline-subtle/10 bg-surface px-4 py-3 font-body text-[15px] leading-[24px] text-primary placeholder:text-outline/50 transition-all sm:px-6 sm:py-4 sm:text-[16px] sm:leading-[24px]"
+                      placeholder={label}
+                    />
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+            <FadeIn delay={0.38}>
+              <AnimatedButton
+                type="submit"
+                showArrowAnimation
+                className="flex w-full items-center justify-center gap-3 rounded-full bg-primary py-5 font-headline text-[18px] leading-[26px] tracking-[-0.01em] font-semibold text-surface shadow-[0_18px_40px_rgba(255,255,255,0.12)] transition-colors hover:shadow-[0_24px_55px_rgba(255,255,255,0.18)] sm:py-6 sm:text-[24px] sm:leading-[32px]"
+              >
+                Let's Build It
+              </AnimatedButton>
+            </FadeIn>
+          </form>
+          <FadeIn delay={0.46}>
+            <p className="mt-6 text-center font-label text-[10px] font-medium text-on-surface-dim/60 sm:mt-8 sm:text-xs">
+              Send the basics now. We can collect photos, domain details, menu PDFs,
+              service lists, and brand notes after we know the business.
+            </p>
+          </FadeIn>
+        </div>
+      </FadeIn>
     </div>
   </SectionShell>
 );
