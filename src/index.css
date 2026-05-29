@@ -45,3 +45,628 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.sk-features-section {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: transparent;
+  color: #ffffff;
+  padding: 3rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+.sk-features-section *,
+.sk-features-section *::before,
+.sk-features-section *::after {
+  box-sizing: inherit;
+}
+
+.sk-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sk-header {
+  margin-bottom: 3.5rem;
+}
+
+.sk-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.sk-intro {
+  font-size: 1rem;
+  color: #a3a3a3;
+  margin: 0;
+}
+
+.sk-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .sk-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 4rem;
+  }
+}
+
+.sk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.sk-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sk-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sk-item-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.sk-item-content p {
+  font-size: 0.95rem;
+  color: #a3a3a3;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sk-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid #262626;
+}
+
+.sk-footer p {
+  font-size: 0.875rem;
+  color: #737373;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Monolith Pricing Page Styles
+   ========================================================================== */
+
+.monolith-pricing-page {
+  background-color: transparent;
+  color: #e5e2e1;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monolith-pricing-page *,
+.monolith-pricing-page *::before,
+.monolith-pricing-page *::after {
+  box-sizing: inherit;
+}
+
+.monolith-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.monolith-hero-section {
+  padding: 120px 0 40px 0;
+}
+
+.monolith-table-section {
+  padding: 20px 0 80px 0;
+}
+
+.monolith-essentials-section {
+  padding: 40px 0 60px 0;
+}
+
+.monolith-covers-section {
+  padding: 60px 0 20px 0;
+}
+
+.monolith-container {
+  max-width: 1280px;
+  width: 100%;
+  padding-left: 64px;
+  padding-right: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Header Styles */
+.monolith-header {
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.monolith-display-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 64px;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.monolith-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.monolith-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #c4c7c8;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Comparison Table
+   ========================================================================== */
+.table-wrapper {
+  width: 100%;
+  background-color: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.monolith-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.monolith-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.monolith-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+.monolith-table th,
+.monolith-table td {
+  padding: 22px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.monolith-table tr:last-child td {
+  border-bottom: none;
+}
+
+.monolith-table th {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #8e9192;
+  background-color: #121212;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
+.col-feature { width: 34%; }
+.col-highlight { width: 22%; }
+.col-other { width: 22%; }
+
+.text-center { text-align: center; }
+.text-muted { color: #8e9192; }
+.bold-val { font-weight: 600; color: #ffffff; }
+
+.cell-feature {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.cell-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* SiteKeep Column Styling */
+.col-highlight,
+.cell-highlight {
+  background-color: rgba(255, 255, 255, 0.025);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.highlight-header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.badge-sub-geist {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.45;
+}
+
+.header-brand-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.brand-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.brand-tag {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.highlight-primary {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Status Indicators */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+.status-indicator .status-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5px;
+}
+
+.status-indicator.positive {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.status-indicator.positive .status-icon {
+  stroke: #ffffff;
+}
+
+.status-indicator.neutral {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #c4c7c8;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.status-indicator.neutral .status-icon {
+  stroke: #c4c7c8;
+}
+
+.status-indicator.negative {
+  color: #8e9192;
+}
+.status-indicator.negative .status-icon {
+  stroke: #8e9192;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   Essentials Card
+   ========================================================================== */
+.essentials-card {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.essentials-icon-box {
+  background-color: #ffffff;
+  border-radius: 9999px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.essentials-icon {
+  width: 28px;
+  height: 28px;
+  stroke: #000000;
+  stroke-width: 1.5px;
+}
+
+.essentials-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.essentials-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.essentials-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.essentials-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #c4c7c8;
+  margin: 0;
+}
+
+.essentials-text.highlight-line {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   What Your $30/Month Covers
+   ========================================================================== */
+.monolith-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.monolith-card {
+  background-color: #1c1b1b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 32px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.monolith-card:hover {
+  background-color: #262626;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.monolith-icon-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.monolith-icon {
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+}
+
+.monolith-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.monolith-card-title {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.monolith-card-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #c4c7c8;
+  margin: 0;
+}
+
+.monolith-footer {
+  text-align: center;
+  width: 100%;
+}
+
+.monolith-footer-text {
+  font-family: 'Geist', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8e9192;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Page Legal Footer
+   ========================================================================== */
+.monolith-page-footer {
+  padding: 0 0 20px 0;
+  text-align: center;
+}
+
+.monolith-legal-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #8e9192;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Monolith Media Queries
+   ========================================================================== */
+@media (min-width: 768px) {
+  .monolith-table-section {
+    display: flex;
+  }
+}
+
+@media (max-width: 1023px) {
+  .monolith-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .monolith-display-title {
+    font-size: 44px;
+    line-height: 52px;
+  }
+  .monolith-title {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .monolith-table th,
+  .monolith-table td {
+    padding: 18px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .monolith-table-section {
+    display: none;
+  }
+  .monolith-section {
+    padding: 60px 0;
+  }
+  .monolith-hero-section {
+    padding-top: 80px;
+  }
+  .monolith-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .monolith-header {
+    margin-bottom: 32px;
+  }
+  .monolith-display-title {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  .monolith-title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  .monolith-subtitle {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .essentials-card {
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .essentials-title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  .monolith-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .monolith-card {
+    padding: 24px;
+    gap: 20px;
+  }
+}

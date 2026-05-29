@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
-  Tag,
   User,
   X,
 } from "lucide-react";
@@ -602,17 +601,17 @@ const PricingSection = () => {
   const rows = [
     {
       label: "Setup Cost",
-      icon: Tag,
+      icon: Calendar,
       siteKeep: "$0",
       wix: "$0",
-      agency: "$2,000-$10,000",
+      agency: "$2,000–$10,000",
     },
     {
       label: "Monthly Cost",
       icon: Calendar,
       siteKeep: "$30",
-      wix: "$16-$45",
-      agency: "$100-$500",
+      wix: "$16–$45",
+      agency: "$100–$500",
     },
     {
       label: "Custom Built",
@@ -650,27 +649,65 @@ const PricingSection = () => {
 
   return (
     <SectionShell>
-      <div className="mx-auto flex w-full max-w-[560px] flex-col pb-2">
-        <div className="mb-7 flex items-start justify-between gap-3">
-          <p className="pt-1 text-[13px] font-medium text-zinc-400">
-            Free build. $30/month care.
-          </p>
-          <div className="rounded-full border border-white/10 bg-white/[0.06] px-5 py-2 text-[18px] font-semibold leading-none text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
-            $0 setup
+      <div className="monolith-pricing-page">
+        {/* SECTION 1: Page Heading Area */}
+        <section className="monolith-section monolith-hero-section">
+          <div className="monolith-container">
+            <header className="monolith-header">
+              <h1 className="monolith-display-title">Your $30/Month Keeps Everything Running</h1>
+              <p className="monolith-subtitle">See how SiteKeep compares.</p>
+            </header>
           </div>
-        </div>
+        </section>
 
-        <div className="mb-5">
-          <h1 className="max-w-[18ch] font-headline text-[44px] font-extrabold leading-[0.98] tracking-[-0.03em] text-white sm:text-[56px]">
-            Your $30/Month Keeps Everything Running
-          </h1>
-          <p className="mt-4 text-[20px] leading-[1.2] text-zinc-400">
-            See how SiteKeep compares.
-          </p>
-        </div>
+        {/* SECTION 2: Comparison Table Area (Desktop Only) */}
+        <section className="monolith-section monolith-table-section">
+          <div className="monolith-container">
+            <div className="table-wrapper">
+              <table className="monolith-table">
+                <thead>
+                  <tr>
+                    <th className="col-feature">Feature</th>
+                    <th className="col-highlight text-center">
+                      <div className="highlight-header-container">
+                        <span className="badge-sub-geist">RECOMMENDED</span>
+                        <div className="header-brand-container">
+                          <span className="brand-name">SiteKeep</span>
+                          <span className="brand-tag">YOU</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="col-other text-center">Wix/Squarespace</th>
+                    <th className="col-other text-center">Agency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row, rowIndex) => {
+                    const Icon = row.icon;
+                    const isLast = rowIndex === rows.length - 1;
+                    return (
+                      <tr key={`desktop-${row.label}`}>
+                        <td className="cell-feature">
+                          <Icon className="cell-icon" />
+                          {row.label}
+                        </td>
+                        <td className="cell-highlight text-center bold-val highlight-primary">
+                          {row.siteKeep}
+                        </td>
+                        <td className="text-center">{row.wix}</td>
+                        <td className="text-center">{row.agency}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
+        {/* Mobile Toggle & Table - Untouched */}
         <FadeIn delay={0.08}>
-          <div className="relative mb-7 flex rounded-[30px] border border-white/10 bg-black/70 p-1 shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+          <div className="relative mb-7 flex rounded-[30px] border border-white/10 bg-black/70 p-1 shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm md:hidden">
             <button
               onClick={() => setActiveComparison("wix")}
               className={`relative z-10 inline-flex w-1/2 items-center justify-center gap-2 rounded-full px-3 py-4 text-[16px] font-semibold tracking-[-0.01em] transition-colors ${
@@ -707,7 +744,7 @@ const PricingSection = () => {
         </FadeIn>
 
         <FadeIn delay={0.14}>
-          <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(170deg,#111214_0%,#0a0a0c_100%)]">
+          <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[linear-gradient(170deg,#111214_0%,#0a0a0c_100%)] md:hidden">
             <div className="grid grid-cols-[1.1fr_0.7fr_0.9fr] border-b border-white/10">
               <span className="border-r border-white/10 px-4 py-4 text-[12px] font-semibold uppercase tracking-[0.08em] text-zinc-500">
                 Feature
@@ -757,29 +794,104 @@ const PricingSection = () => {
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.2}>
-          <div className="mt-5 rounded-[18px] border border-white/10 bg-[linear-gradient(165deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-5 shadow-[0_24px_48px_rgba(0,0,0,0.28)]">
-            <div className="flex items-start gap-4">
-              <div className="mt-0.5 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/[0.04]">
-                <ShieldCheck className="h-6 w-6 text-zinc-200" />
+        {/* SECTION 3: "All the essentials" Card */}
+        <section className="monolith-section monolith-essentials-section">
+          <div className="monolith-container">
+            <div className="essentials-card">
+              <div className="essentials-icon-box">
+                <ShieldCheck className="essentials-icon" />
               </div>
-              <div>
-                <h3 className="text-[18px] font-semibold leading-[1.2] text-white sm:text-[20px]">
-                  All the essentials. One simple price.
-                </h3>
-                <p className="mt-1 text-[14px] leading-[22px] text-zinc-400 sm:text-[15px] sm:leading-[24px]">
-                  No hidden fees, no surprises.
-                  <br />
-                  Just a site that works - for $30/month.
-                </p>
+              <div className="essentials-content">
+                <h2 className="essentials-title">All the essentials. One simple price.</h2>
+                <div className="essentials-details">
+                  <p className="essentials-text">No hidden fees, no surprises.</p>
+                  <p className="essentials-text highlight-line">Just a site that works — for $30/month.</p>
+                </div>
               </div>
             </div>
           </div>
-        </FadeIn>
+        </section>
 
-        <p className="mx-auto mt-4 text-[12px] text-zinc-600">
-          Pricing shown for small business brochure-style websites.
-        </p>
+        {/* SECTION 4: "What Your $30/Month Covers" Section */}
+        <section className="monolith-section monolith-covers-section">
+          <div className="monolith-container">
+            <header className="monolith-header">
+              <h2 className="monolith-title">What Your $30/Month Covers</h2>
+              <p className="monolith-subtitle">No surprise invoices. No platform fees. Just one number that covers everything.</p>
+            </header>
+
+            <div className="monolith-grid">
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">Hosting</h3>
+                  <p className="monolith-card-text">Your site lives on fast, reliable infrastructure. No separate hosting bill.</p>
+                </div>
+              </div>
+
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">SSL Certificate</h3>
+                  <p className="monolith-card-text">Your site is secured with HTTPS, keeping visitors and search engines happy.</p>
+                </div>
+              </div>
+
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <ShieldCheck className="monolith-icon" />
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">Security Updates</h3>
+                  <p className="monolith-card-text">We monitor and patch vulnerabilities before they become problems.</p>
+                </div>
+              </div>
+
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">Uptime Monitoring</h3>
+                  <p className="monolith-card-text">If your site ever goes down, we know about it before you do.</p>
+                </div>
+              </div>
+
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">Performance Maintenance</h3>
+                  <p className="monolith-card-text">Regular checks to keep your site loading fast and running clean.</p>
+                </div>
+              </div>
+
+              <div className="monolith-card">
+                <div className="monolith-icon-box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="monolith-icon"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </div>
+                <div className="monolith-card-content">
+                  <h3 className="monolith-card-title">Backup & Recovery</h3>
+                  <p className="monolith-card-text">Your site is backed up regularly so nothing is ever lost.</p>
+                </div>
+              </div>
+            </div>
+
+            <footer className="monolith-footer">
+              <p className="monolith-footer-text">All plans include everything above. Cancel anytime.</p>
+            </footer>
+          </div>
+        </section>
+
+        {/* SECTION 5: Small Footer Note */}
+        <footer className="monolith-page-footer">
+          <p className="monolith-legal-note">Pricing shown for small business brochure-style websites.</p>
+        </footer>
       </div>
     </SectionShell>
   );
